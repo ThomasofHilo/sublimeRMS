@@ -29,7 +29,7 @@ contexts:
       scope: constant.character
     - match: '\b(if|else|elseif|endif)\b'
       scope: keyword.declaration
-    - match: '\b(start_random|percent_chance)\b'
+    - match: '\b(start_random|percent_chance|end_random)\b'
       scope: string
     - match: '\b(base_terrain|terrain_type|land_percent|base_size|border_fuzziness|clumping_factor|zone|other_zone_avoidance_distance|set_scaling_to_map_size)\b'
       scope: support.function
@@ -65,7 +65,7 @@ contexts:
       scope: constant.numeric.example-c
 
   terrains:
-    - match: '\b(BAMBOO|FOREST|LEAVES|PALM_DESERT|PINE_FOREST|SNOW_FOREST)\b'
+    - match: '\b(BAMBOO|FOREST|LEAVES|JUNGLE|PALM_DESERT|PINE_FOREST|SNOW_FOREST)\b'
       scope: variable.language.this.coffee
     - match: '\b(BEACH|DIRT|DIRT2|DIRT3|DIRT_SNOW|DESERT|GRASS|GRASS2|GRASS3|GRASS_SNOW|ICE|ROAD|ROAD2)\b'
       scope: variable.language.this.coffee
@@ -77,6 +77,8 @@ contexts:
 
   objects:
     - match: '\b(CHAMPION|ARBALEST|ARCHER|EAGLE_WARRIOR|ELITE_EAGLE_WARRIOR|CAVALRY_ARCHER|HALBERDIER|CROSSBOWMAN|LONG_SWORDSMAN|ELITE_SKIRMISHER|MAN_AT_ARMS)\b'
+      scope: meta.structure.dictionary.json string.quoted.double.json
+    - match: '\b(TOWN_CENTER|RELIC|CASTLE|WALL|FORAGE|GOLD|STONE)\b'
       scope: meta.structure.dictionary.json string.quoted.double.json
     - match: '\b(HAND_CANNONEER|MILITIA|HEAVY_CAVALRY_ARCHER|PIKEMAN|SKIRMISHER|SPEARMAN|TWO_HANDED_SWORDSMAN)\b'
       scope: meta.structure.dictionary.json string.quoted.double.json
