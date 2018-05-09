@@ -18,6 +18,7 @@ contexts:
     - include: numbers
     - include: objects
     - include: terrains
+    - include: maps
   keywords:
     # Keywords are if, else for and while.
     # Note that blackslashes don't need to be escaped within single quoted
@@ -47,15 +48,17 @@ contexts:
       scope: support.function
     - match: '\b(TINY_MAP|SMALL_MAP|MEDIUM_MAP|LARGE_MAP|HUGE_MAP|GIGANTIC_MAP|LUDIKRIS_MAP|REGICIDE|DEATH_MATCH|HIGH_RESOURCES|MEDIUM_RESOURCES|LOW_RESOURCES|DEFAULT_RESOURCES)\b'
       scope: support.function
-    - match: '\b(FIXED_POSITIONS|RANDOM_MAP|TURBO_RANDOM_MAP|KING_OF_HILL|WONDER_RACE|DEFEND_WONDER|CAPTURE_RELICS|UP_AVAILABLE)\b'
+    - match: '\b(FIXED_POSITIONS|RANDOM_MAP|TURBO_RANDOM_MAP|KING_OF_HILL|WONDER_RACE|DEFEND_WONDER|CAPTURE_RELICS|UP_AVAILABLE|weather_type)\b'
       scope: support.function
     - match: '\b([1-8]_PLAYER_GAME|[0-4]_TEAM_GAME|CAPTURE_THE_RELIC|set_zone_randomly|set_zone_by_team|base_elevation|land_position|assign_to_player|assign_to)\b'
       scope: support.function
-    - match: '\b(left_border|right_border|top_border|bottom_border|land_id|nomad_resources|spacing|create_connect_same_land_zones)\b'
+    - match: '\b(left|right|top|bottom|)_border\b'
+      scope: support.function
+    - match: '\b(land_id|nomad_resources|spacing|create_connect_same_land_zones|guard_state|effect_amount)\b'
       scope: support.function
     - match: '\b(min_number_of_cliffs|max_number_of_cliffs|min_length_of_cliff|max_length_of_cliff|cliff_curliness|min_distance_cliffs|min_terrain_distance|height_limits)\b'
       scope: support.function
-    - match: '\b(default_terrain_replacement|replace_terrain|terrain_cost|terrain_size)\b'
+    - match: '\b(default_terrain_replacement|replace_terrain|terrain_cost|terrain_size|TEAM[1-4]_SIZE[2-4]|effect_percent|terrain_state)\b'
       scope: support.function
     - match: 'define|const'
       scope: entity.name
@@ -66,39 +69,57 @@ contexts:
 
   terrains:
     - match: '\b(BAMBOO|FOREST|LEAVES|JUNGLE|PALM_DESERT|PINE_FOREST|SNOW_FOREST)\b'
-      scope: variable.language.this.coffee
+      scope: variable.language
     - match: '\b(BEACH|DIRT|DIRT2|DIRT3|DIRT_SNOW|DESERT|GRASS|GRASS2|GRASS3|GRASS_SNOW|ICE|ROAD|ROAD2)\b'
-      scope: variable.language.this.coffee
+      scope: variable.language
     - match: '\b(SHALLOW|SNOW|WATER|MED_WATER|DEEP_WATER|)\b'
-      scope: variable.language.this.coffee
-    - match: '\b(DLC_ROCK|DLC_SAVANNAH|DLC_DIRT4|DLC_DRYROAD|DLC_MOORLAND|DLC_CRACKED|DLC_QUICKSAND|DLC_BLACK|DLC_DRAGONFOREST|DLC_BAOBAFOREST|DLC_ACACIAFOREST)\b'
-      scope: meta.structure.dictionary.json string.quoted.double.json
+      scope: variable.language
+    - match: '\bDLC_(ROCK|SAVANNAH|DIRT4|DRYROAD|MOORLAND|CRACKED|QUICKSAND|BLACK|DRAGONFOREST|BAOBAFOREST|ACACIAFOREST)\b'
+      scope: variable.language
 
+  maps:
+    - match: '\b(ARABIA|ARCHIPELIGO|ARENA|BALTIC|BLACK_FOREST|COASTAL|CONTINENTAL|CRATER_LAKE|FORTRESS|GHOST_LAKE|GOLD_RUSH|HIGHLAND)\b'
+      scope: variable.language
+    - match: '\b(ISLANDS|MEDITERRANEAN|MIGRATION|MONGOLIA|NOMAD|OASIS|RIVERS|SALT_MARSH|SCANDINAVIA|YUCATAN)\b'
+      scope: variable.language
+    - match: '\b(STEPPE|BUDAPEST|VALLEY|ATLANTIC|LAND_OF_LAKES|LAND_NOMAD|CENOTES|GOLDEN_HILL|MEGARANDOM|MICHI)\b'
+      scope: variable.language
+    - match: '\b(AMBUSH|CUSTOM|NILE_DELTA|MOUNTAIN_PASS|SERENGETI|SOCOTRA|KILIMANJARO)\b'
+      scope: variable.language
 
   objects:
     - match: '\b(CHAMPION|ARBALEST|ARCHER|EAGLE_WARRIOR|ELITE_EAGLE_WARRIOR|CAVALRY_ARCHER|HALBERDIER|CROSSBOWMAN|LONG_SWORDSMAN|ELITE_SKIRMISHER|MAN_AT_ARMS)\b'
-      scope: meta.structure.dictionary.json string.quoted.double.json
-    - match: '\b(TOWN_CENTER|RELIC|CASTLE|WALL|FORAGE|GOLD|STONE)\b'
-      scope: meta.structure.dictionary.json string.quoted.double.json
-    - match: '\b(HAND_CANNONEER|MILITIA|HEAVY_CAVALRY_ARCHER|PIKEMAN|SKIRMISHER|SPEARMAN|TWO_HANDED_SWORDSMAN)\b'
-      scope: meta.structure.dictionary.json string.quoted.double.json
-    - match: '\b(CAMEL|CAVALIER|HEAVY_CAMEL|HUSSAR|KNIGHT|LIGHT_CAVALRY|PALADIN|SCOUT|SCOUT_CAVALRY)\b'
-      scope: meta.structure.dictionary.json string.quoted.double.json
+      scope: variable.language
+    - match: '\b(TOWN_CENTER|RELIC|CASTLE|WALL|FORAGE|GOLD|STONE|HORSE|MAP_REVEALER|SABOTEUR|TORCH|TORCH_CONVERTING|WILD_BOAR)\b'
+      scope: variable.language
+    - match: '\b(HAND_CANNONEER|MILITIA|HEAVY_CAVALRY_ARCHER|PIKEMAN|SKIRMISHER|SPEARMAN|TWO_HANDED_SWORDSMAN|MONASTERY|SKELETON|ROCK)\b'
+      scope: variable.language
+    - match: '\b(CAMEL|CAVALIER|HEAVY_CAMEL|HUSSAR|KNIGHT|LIGHT_CAVALRY|PALADIN|SCOUT|SCOUT_CAVALRY|ES_FLAG|FLAG_[A-E])\b'
+      # scope: meta.structure.dictionary.json string.quoted.double.json
+      scope: variable.language
     - match: '\b(BATTERING_RAM|BOMBARD_CANNON|CAPPED_RAM|HEAVY_SCORPION|MANGONEL|ONAGER|SCORPION|SIEGE_ONAGER|SIEGE_RAM|TREBUCHET|TREBUCHET_PACKED)\b'
-      scope: meta.structure.dictionary.json string.quoted.double.json
+      scope: variable.language
     - match: '\b(CANNON_GALLEON|DEMOLITION_SHIP|ELITE_CANNON_GALLEON|FAST_FIRE_SHIP|FIRE_SHIP|FISHING_SHIP|GALLEY|GALLEON|HEAVY_DEMOLITION_SHIP|TRADE_COG|TRANSPORT_SHIP|WAR_GALLEY)\b'
-      scope: meta.structure.dictionary.json string.quoted.double.json
-    - match: '\b(BERSERK|CATAPHRACT|CHU_KO_NU|CONQUISTADOR|HUSKARL|JAGUAR_WARRIOR|JANISSARY|LONGBOAT|LONGBOWMAN|MAMELUKE|MANGUDAI|MISSIONARY|PLUMED_ARCHER|SAMURAI|TARKAN)\b'
-      scope: meta.structure.dictionary.json string.quoted.double.json
-    - match: '\b(TEUTONIC_KNIGHT|THROWING_AXEMAN|TURTLE_SHIP|WAR_ELEPHANT|WAR_WAGON|WOAD_RAIDER)\b'
-      scope: meta.structure.dictionary.json string.quoted.double.json
-    - match: '\b(KING|MONK|PETARD|SHEEP|TRADE_CART|TURKEY|VILLAGER)\b'
-      scope: meta.structure.dictionary.json string.quoted.double.json
+      scope: variable.language
+    - match: '\b(BERSERK|CATAPHRACT|CHU_KO_NU|CONQUISTADOR|HUSKARL|JAGUAR_WARRIOR|JANISSARY|LONGBOAT|LONGBOWMAN|MAMELUKE|MANGUDAI|MISSIONARY)\b'
+      scope: variable.language
+    - match: '\b(PLUMED_ARCHER|SAMURAI|TARKAN|TEUTONIC_KNIGHT|THROWING_AXEMAN|TURTLE_SHIP|WAR_ELEPHANT|WAR_WAGON|WOAD_RAIDER)\b'
+      scope: variable.language
+    - match: '\bELITE_(BERSERK|CATAPHRACT|CHU_KO_NU|CONQUISTADOR|HUSKARL|JAGUAR_WARRIOR|JANISSARY|LONGBOAT|LONGBOWMAN|MAMELUKE|MANGUDAI)\b'
+      scope: variable.language
+    - match: '\bELITE_(PLUMED_ARCHER|SAMURAI|TARKAN|TEUTONIC_KNIGHT|THROWING_AXEMAN|TURTLE_SHIP|WAR_ELEPHANT|WAR_WAGON|WOAD_RAIDER)\b'
+      scope: variable.language
+    - match: '\b(KING|MONK|PETARD|SHEEP|TRADE_CART|TURKEY|VILLAGER|MONUMENT|MOSQUE|PYRAMID|GREAT_PYRAMID|THE_ACCURSED_TOWER|THE_TOWER_OF_FLIES)\b'
+      scope: variable.language
     - match: '\b(BOAR|DEER|DIRE_WOLF|DORADO|FISH|HAWK|IRON_BOAR|JAGUAR|JAVELINA|MACAW|MARLIN1|MARLIN2|RABID_WOLF|SALMON|SNAPPER|SHORE_FISH|TUNA|TURKEY|WILD_HORSE|WOLF)\b'
-      scope: meta.structure.dictionary.json string.quoted.double.json
-    - match: '\b(BAMBOO_TREE|JUNGLETREE|OAKTREE|PALMTREE|PINETREE|SNOWPINETREE|TREE_[A-L])\b'
-      scope: meta.structure.dictionary.json string.quoted.double.json
-    - match: '\b(DLC_BEAR|DLC_LLAMA|DLC_VULTURE|DLC_COW|DLC_ELEPHANT|DLC_GOAT|DLC_ZEBRA|DLC_OSTRICH|DLC_STORK|DLC_CROCODILE|DLC_LION)\b'
-      scope: meta.structure.dictionary.json string.quoted.double.json
-    - match: '\b(DLC_ORANGEBUSH|DLC_BAOBABTREE|DLC_DRAGONTREE|DLC_ACACIATREE|DLC_AFRICANBUSH|DLC_AFRICANBUSH_2|DLC_FENCE)\b'
-      scope: meta.structure.dictionary.json string.quoted.double.json
+      scope: variable.language
+    - match: '\b(FISH_DORADO|GREAT_FISH_MARLIN|GREAT_FISH_MARLIN2|FISH_SALMON|FISH_SNAPPER|FISH_TUNA|YURT|YURT[2-8]|PAVILION|PAVILION[2-3]|TRADE_WORKSHOP)\b'
+      scope: variable.language
+    - match: '\b(BAMBOO_TREE|JUNGLETREE|OAKTREE|PALMTREE|PINETREE|SNOWPINETREE|TREE_[A-L]|TREE[1-5]|FLOWER_BED|DOME_OF_THE_ROCK)\b'
+      scope: variable.language
+    - match: '\b(OAK_FOREST_TREE|FOREST_TREE|BAMBOO_FOREST_TREE|JUNGLE_TREE|PALM_FOREST_TREE|PINE_FOREST_TREE|SNOW_PINE_TREE|TREE_TD)\b'
+      scope: variable.language
+    - match: '\bDLC_(BEAR|LLAMA|VULTURE|COW|ELEPHANT|GOAT|ZEBRA|OSTRICH|STORK|CROCODILE|LION)\b'
+      scope: variable.language
+    - match: '\bDLC_(ORANGEBUSH|BAOBABTREE|DRAGONTREE|ACACIATREE|AFRICANBUSH|AFRICANBUSH_2|FENCE)\b'
+      scope: variable.language
